@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pratham Chawla's Futuristic Portfolio</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #e0e0ff;
+            overflow-x: hidden;
+            background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900"%3E%3Cdefs%3E%3CradialGradient id="grad1" cx="50%" cy="50%" r="50%"%3E%3Cstop offset="0%" style="stop-color:%23202050;stop-opacity:1" /%3E%3Cstop offset="100%" style="stop-color:%23101030;stop-opacity:1" /%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width="1600" height="900" fill="url(%23grad1)" /%3E%3C/svg%3E');
+            background-size: cover;
+            position: relative;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+        }
+        .header h1 {
+            font-size: 4.5rem;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+            margin: 0;
+        }
+        .summary {
+            max-width: 800px;
+            margin: 20px auto;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-align: center;
+            color: #d0d0ff;
+        }
+        .skills, .projects {
+            margin: 40px 0;
+            text-align: center;
+        }
+        .skills h2, .projects h2 {
+            font-size: 2.5rem;
+            color: #00f2fe;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.7);
+        }
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .skill {
+            background: rgba(0, 242, 254, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+            border: 1px solid #00f2fe;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .skill:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #00f2fe;
+        }
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .project-card {
+            background: rgba(30, 30, 60, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #4facfe;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(79, 172, 254, 0.5);
+        }
+        .project-card h3 {
+            font-size: 1.5rem;
+            color: #00f2fe;
+            margin: 0 0 10px;
+        }
+        .project-card p {
+            font-size: 1rem;
+            color: #d0d0ff;
+            line-height: 1.5;
+        }
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .tech-tag {
+            background: #4facfe;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        .project-link {
+            margin-top: 10px;
+            display: block;
+        }
+        .project-link a {
+            color: #00f2fe;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .project-link a:hover {
+            color: #4facfe;
+            text-decoration: underline;
+        }
+        .achievements {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .achievements a {
+            color: #00f2fe;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        .achievements a:hover {
+            color: #4facfe;
+            text-decoration: underline;
+        }
+        .circuit {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
+            background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900"%3E%3Cpath d="M0,450 L200,400 Q300,350 400,450 L600,500 Q700,550 800,450 L1000,400 Q1100,350 1200,450 L1400,500 Q1500,550 1600,450" stroke="%234facfe" stroke-width="2" fill="none" opacity="0.5"/%3E%3Cpath d="M0,600 L200,650 Q300,700 400,600 L600,550 Q700,500 800,600 L1000,650 Q1100,700 1200,600 L1400,550 Q1500,500 1600,600" stroke="%2300f2fe" stroke-width="2" fill="none" opacity="0.5"/%3E%3C/svg%3E');
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -2;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="circuit"></div>
+    <canvas id="particleCanvas"></canvas>
+    <div class="container">
+        <div class="header">
+            <h1>Pratham Chawla</h1>
+            <div class="summary">
+                A visionary AI and Computer Vision Engineer dedicated to crafting cutting-edge solutions. Specializing in scalable machine learning systems, real-time computer vision, and generative AI, I drive innovation in industries ranging from manufacturing to healthcare.
+            </div>
+        </div>
+        <div class="skills">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <span class="skill">Computer Vision</span>
+                <span class="skill">Generative AI</span>
+                <span class="skill">Python</span>
+                <span class="skill">GStreamer</span>
+                <span class="skill">Docker</span>
+                <span class="skill">MongoDB</span>
+                <span class="skill">MySQL</span>
+                <span class="skill">Faiss</span>
+                <span class="skill">React</span>
+                <span class="skill">OpenCV</span>
+                <span class="skill">PyTorch</span>
+                <span class="skill">LangChain</span>
+                <span class="skill">YOLOv8</span>
+                <span class="skill">PointNet++</span>
+                <span class="skill">Transformers</span>
+                <span class="skill">Flask</span>
+                <span class="skill">Open3D</span>
+            </div>
+        </div>
+        <div class="projects">
+            <h2>Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>Severstal Steel Defect Detection</h3>
+                    <p>Developed an AI-powered system to detect defects in steel surfaces using YOLOv8 models. Integrated real-time analytics with OpenCV and SORT tracker for precise defect localization and visualization, deployed via Docker for production scalability.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">YOLOv8</span>
+                        <span class="tech-tag">OpenCV</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">SORT</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://www.linkedin.com/posts/pratham-chawla_machinelearning-computervision-steelindustry-activity-7334824622808281089-AEz_?utm_source=share&utm_medium=member_desktop&rcm=ACoAADYguPMB8DEbhqEcpRWEEosBugiBKelMYF0" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>AI-Powered Interview Prep Platform</h3>
+                    <p>Built a platform leveraging NLP and generative AI to simulate realistic interview scenarios. Used ChatGroq API for dynamic question generation and feedback, with a React-based UI for seamless user interaction.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">ChatGroq API</span>
+                        <span class="tech-tag">NLP</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://www.linkedin.com/posts/pratham-chawla_ai-nlp-langchain-activity-7295534525520953345-DMNq?utm_source=share&utm_medium=member_desktop&rcm=ACoAADYguPMB8DEbhqEcpRWEEosBugiBKelMYF0" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Advanced Summarization Using LangChain and LLMs</h3>
+                    <p>Created a text summarization tool using LangChain and transformer models to generate concise summaries of large documents. Implemented RecursiveCharacterTextSplitter for efficient text chunking and RetrievalQA for context-aware outputs.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">LangChain</span>
+                        <span class="tech-tag">Transformers</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">RetrievalQA</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://www.linkedin.com/posts/pratham-chawla_ai-nlp-langchain-activity-7280560684302483456-TFoH?utm_source=share&utm_medium=member_desktop&rcm=ACoAADYguPMB8DEbhqEcpRWEEosBugiBKelMYF0" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>AI Healthcare Translation Web App</h3>
+                    <p>Developed a web app for translating medical documents across languages using transformer-based models. Integrated a React frontend with Tailwind CSS and a Flask backend, supporting real-time translation and secure data handling.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Flask</span>
+                        <span class="tech-tag">Transformers</span>
+                        <span class="tech-tag">Tailwind CSS</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://www.linkedin.com/posts/pratham-chawla_ai-healthcare-innovation-activity-7278857572399398913-wO-n?utm_source=share&utm_medium=member_desktop&rcm=ACoAADYguPMB8DEbhqEcpRWEEosBugiBKelMYF0" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Intelligent Search Engine and Document Chatbot</h3>
+                    <p>Designed a search engine and chatbot for document querying using Faiss for vector-based search and LangChain for conversational workflows. Optimized for scalability with MongoDB for data storage.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Faiss</span>
+                        <span class="tech-tag">LangChain</span>
+                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://www.linkedin.com/posts/pratham-chawla_ai-chatbot-langchain-activity-7277290288975396866-EWqQ?utm_source=share&utm_medium=member_desktop&rcm=ACoAADYguPMB8DEbhqEcpRWEEosBugiBKelMYF0" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>WebPage Q&A App</h3>
+                    <p>Built a Q&A application for web content using LangChain's Document Loaders and Chains. Enabled real-time question answering with a RetrievalQA chain, integrated with a responsive React frontend.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">LangChain</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">RetrievalQA</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://www.linkedin.com/posts/pratham-chawla_nlp-ai-webapp-activity-7269232832483340289-yCql?utm_source=share&utm_medium=member_desktop&rcm=ACoAADYguPMB8DEbhqEcpRWEEosBugiBKelMYF0" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>3D Point Cloud and Mesh Generation</h3>
+                    <p>Developed a pipeline for generating 3D point clouds and meshes from RGB-D data using Open3D and PyTorch. Optimized for real-time processing and visualization, with applications in robotics and AR.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Open3D</span>
+                        <span class="tech-tag">PyTorch</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">RGB-D Processing</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://www.linkedin.com/posts/pratham-chawla_3d-pointcloud-machinelearning-activity-7267124152988250112-ldjZ?utm_source=share&utm_medium=member_desktop&rcm=ACoAADYguPMB8DEbhqEcpRWEEosBugiBKelMYF0" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Point Cloud Classification</h3>
+                    <p>Implemented a point cloud classification system using PointNet++ for semantic segmentation. Trained on large-scale datasets, achieving high accuracy in object classification for autonomous systems.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">PointNet++</span>
+                        <span class="tech-tag">PyTorch</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">3D Data</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://www.linkedin.com/posts/pratham-chawla_machinelearning-deeplearning-3ddata-activity-7265664399225298944-CkqS?utm_source=share&utm_medium=member_desktop&rcm=ACoAADYguPMB8DEbhqEcpRWEEosBugiBKelMYF0" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Image Search with Text Queries using the Flickr8k Dataset</h3>
+                    <p>Developed an image search system using the Flickr8k dataset, leveraging the CLIP model to enable text-based image retrieval. Implemented efficient vector search with Faiss for fast and accurate results.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">CLIP</span>
+                        <span class="tech-tag">Faiss</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Flickr8k</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://www.linkedin.com/posts/pratham-chawla_ai-machinelearning-clipmodel-activity-7262800718850342912-_j8w?utm_source=share&utm_medium=member_desktop&rcm=ACoAADYguPMB8DEbhqEcpRWEEosBugiBKelMYF0" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Video Title Generation</h3>
+                    <p>Created a system to generate descriptive video titles using CNNs and transformer-based models. Processed video frames and metadata to produce contextually relevant titles, optimized for SEO and user engagement.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">CNN</span>
+                        <span class="tech-tag">Transformers</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Video Processing</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://www.linkedin.com/posts/pratham-chawla_machinelearning-deeplearning-cnn-activity-7259461263833866240-nZvR?utm_source=share&utm_medium=member_desktop&rcm=ACoAADYguPMB8DEbhqEcpRWEEosBugiBKelMYF0" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Image Captioning on Flickr8k</h3>
+                    <p>Built an image captioning model using the Flickr8k dataset, combining CNNs for feature extraction and LSTMs for generating descriptive captions. Achieved high BLEU scores for caption quality.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">CNN</span>
+                        <span class="tech-tag">LSTM</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Flickr8k</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://www.linkedin.com/posts/pratham-chawla_machinelearning-deeplearning-computervision-activity-7257097593082544128-_VV6?utm_source=share&utm_medium=member_desktop&rcm=ACoAADYguPMB8DEbhqEcpRWEEosBugiBKelMYF0" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Applications of YOLO (Loitering, Abandoned Object, Vehicle Analytics, Parking Free Space Detection)</h3>
+                    <p>Developed multiple YOLO-based applications for real-time surveillance, including loitering detection, abandoned object identification, vehicle analytics, and parking space detection. Integrated with OpenCV and GStreamer for robust video processing pipelines.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">YOLO</span>
+                        <span class="tech-tag">OpenCV</span>
+                        <span class="tech-tag">GStreamer</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://www.linkedin.com/posts/pratham-chawla_yolo11-objectdetection-ai-activity-7250389600219639808-4-ar?utm_source=share&utm_medium=member_desktop&rcm=ACoAADYguPMB8DEbhqEcpRWEEosBugiBKelMYF0" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="achievements">
+            <a href="https://drive.google.com/file/d/1i_rxP3lh0M3Jl7emmb9KEsClIC7hLCAi/view?usp=drive_link" target="_blank" rel="noopener noreferrer">View Achievements</a>
+        </div>
+    </div>
+
+    <script>
+        // Particle animation for futuristic effect
+        const canvas = document.getElementById('particleCanvas');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const ctx = canvas.getContext('2d');
+
+        const particles = [];
+        for (let i = 0; i < 150; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 3 + 1,
+                vx: Math.random() * 1.5 - 0.75,
+                vy: Math.random() * 1.5 - 0.75,
+                hue: Math.random() * 60 + 180, // Cyan-blue hues
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, 0.6)`;
+                ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
