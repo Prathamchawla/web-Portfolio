@@ -155,6 +155,41 @@
             z-index: -2;
             pointer-events: none;
         }
+        /* --- Chatbot styles --- */
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 15px #00f2fe; }
+            50% { box-shadow: 0 0 25px #4facfe; }
+            100% { box-shadow: 0 0 15px #00f2fe; }
+        }
+        .chatbot-button {
+            position: fixed; bottom: 20px; right: 20px;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            border: none; border-radius: 50%; width: 60px; height: 60px;
+            color: white; font-size: 26px; cursor: pointer;
+            animation: pulse-glow 1.5s infinite;
+            z-index: 999;
+        }
+        .chatbot-window {
+            position: fixed; bottom: 90px; right: 20px;
+            width: 320px; max-height: 400px;
+            background: rgba(20, 20, 40, 0.95);
+            border: 1px solid #00f2fe; border-radius: 10px;
+            display: none; flex-direction: column; overflow: hidden;
+            box-shadow: 0 0 20px #00f2fe; z-index: 999;
+            animation: fadeInUp 0.4s ease forwards;
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .chat-header { background: linear-gradient(90deg, #00f2fe, #4facfe); color: white; padding: 10px; font-weight: bold; text-align: center; }
+        .chat-messages { flex: 1; padding: 10px; overflow-y: auto; font-size: 0.9rem; }
+        .chat-input { display: flex; border-top: 1px solid #00f2fe; }
+        .chat-input input { flex: 1; padding: 10px; border: none; background: rgba(0, 242, 254, 0.1); color: #e0e0ff; }
+        .chat-input button { background: #00f2fe; border: none; color: white; padding: 10px 15px; cursor: pointer; }
+        .message { margin: 5px 0; }
+        .user { color: #00f2fe; }
+        .bot { color: #4facfe; font-style: italic; }
     </style>
 </head>
 <body>
@@ -356,6 +391,19 @@
         </div>
     </div>
 
+    <!-- Chatbot button -->
+    <button class="chatbot-button" onclick="toggleChat()">💬</button>
+
+    <!-- Chatbot window -->
+    <div class="chatbot-window" id="chatbot">
+        <div class="chat-header">Chat with Pratham 🤖</div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Type a message...">
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
     <script>
         // Particle animation for futuristic effect
         const canvas = document.getElementById('particleCanvas');
@@ -394,6 +442,67 @@
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+        });
+
+        // Chatbot functionality
+        const API_URL = "https://prathamchawla21-chat-bot-personal.hf.space/chat";
+
+        function toggleChat(forceOpen = false) {
+            const chat = document.getElementById('chatbot');
+            if (forceOpen) {
+                chat.style.display = 'flex';
+                chat.style.flexDirection = 'column';
+                return;
+            }
+            chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+            chat.style.flexDirection = 'column';
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+            appendMessage("You", msg, "user");
+            input.value = "";
+
+            // Show "Replying..." placeholder
+            const replyingId = appendMessage("Pratham Bot", "Replying...", "bot");
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: msg })
+                });
+                const data = await res.json();
+                
+                // Replace "Replying..." with actual response
+                updateMessage(replyingId, data.reply || "Sorry, I couldn't respond.");
+            } catch (err) {
+                updateMessage(replyingId, "Failed to connect to chatbot.");
+            }
+        }
+
+        function appendMessage(sender, text, type) {
+            const chatMessages = document.getElementById('chatMessages');
+            const msgEl = document.createElement('div');
+            msgEl.classList.add("message", type);
+            msgEl.innerHTML = `<strong>${sender}:</strong> ${text}`;
+            chatMessages.appendChild(msgEl);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return msgEl; // Return element for later update
+        }
+
+        function updateMessage(msgEl, newText) {
+            msgEl.innerHTML = `<strong>Pratham Bot:</strong> ${newText}`;
+        }
+
+        // Auto-open chatbot after 1.5s on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                toggleChat(true);
+                appendMessage("Pratham Bot", "Hi there! 👋 Ask me anything about my work or projects.", "bot");
+            }, 1500);
         });
     </script>
 </body>
